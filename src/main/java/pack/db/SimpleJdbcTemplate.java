@@ -3,6 +3,7 @@ package pack.db;
 import lombok.AllArgsConstructor;
 
 import javax.sql.DataSource;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class SimpleJdbcTemplate {
 
     @FunctionalInterface
     public interface SQLConsumer<T> {
-        void accept(T object) throws SQLException;
+        void accept(T object) throws SQLException, FileNotFoundException, IllegalAccessException;
     }
 
     private final DataSource connectionPool;
@@ -28,6 +29,8 @@ public class SimpleJdbcTemplate {
         Objects.requireNonNull(consumer);
         try (Connection conn = connectionPool.getConnection()) {
             consumer.accept(conn);
+        } catch (FileNotFoundException | IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
