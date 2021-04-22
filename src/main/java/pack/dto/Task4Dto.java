@@ -1,4 +1,4 @@
-package pack.dao;
+package pack.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import pack.ColumnName;
 @Data
 @ToString
 @AllArgsConstructor
-public class Task4Dao {
+public class Task4Dto {
 
     @ColumnName(name = "month")
     public int month;

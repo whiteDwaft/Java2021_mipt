@@ -1,4 +1,4 @@
-package pack.dao;
+package pack.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import pack.ColumnName;
 @Data
 @AllArgsConstructor
 @ToString
-public class Task5Dao {
+public class Task5Dto {
 
     @ColumnName(name = "dayOfWeek")
     public int dayOfWeek;

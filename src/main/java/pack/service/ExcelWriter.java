@@ -1,16 +1,20 @@
 package pack.service;
 
-import java.io.FileNotFoundException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class ExcelWriter {
+    static int counter = 1;
 
-    public static <T> void writeReport(List<T> objectList) throws IllegalAccessException, FileNotFoundException {
+    public static <T> void writeReport(List<T> objectList, boolean isDrawing) throws IllegalAccessException, IOException {
         ExcelReportGenerator<T> excelReportGenerator = new ExcelReportGenerator<>();
-        ExcelReport excelReport = excelReportGenerator.generate(objectList);
-        OutputStream os1 = new FileOutputStream("file.xlsx");
-        excelReport.writeTo(os1);
+        XSSFWorkbook book = excelReportGenerator.generate(objectList);
+        if (isDrawing) {
+            book = ExcelDrawing.draw(book, objectList.size());
+        }
+        FileOutputStream os1 = new FileOutputStream("file_" + counter++ +".xlsx");
+        book.write(os1);
     }
 }
